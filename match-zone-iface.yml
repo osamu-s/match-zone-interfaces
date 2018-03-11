@@ -1,0 +1,17 @@
+---
+- name: get interface info from facts
+  gather_facts: yes
+  hosts: localhost
+  connection: local
+  vars:
+    zones:
+      - name: local
+        IPv4address: 192.168.0.0/16
+      - name: multi
+        IPv4address: 169.254.0.0/16
+  tasks:
+    - include_role:
+        name: match-zone-iface
+
+    - debug:
+        msg: "{{ zone_iface }}"

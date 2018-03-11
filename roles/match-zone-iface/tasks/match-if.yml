@@ -1,0 +1,13 @@
+- name: match for ipv4 subnet
+  set_fact:
+    zone_iface: "{{ zone_iface + [_zf] }}"
+  vars:
+    _zf: "{{ {'zone': item.name, 'device': ifd.device} }}" 
+  with_items: "{{ zones }}"
+  when:
+    ( ifd.ipv4 is defined and
+      item.IPv4address is defined and
+      ifd.ipv4.address |ipaddr(item.IPv4address) ) or
+    ( ifd.ipv6 is defined and
+      item.IPv6address is defined and
+      ifd.ipv6.address |ipaddr(item.IPv6address) )

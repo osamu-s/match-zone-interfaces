@@ -1,0 +1,16 @@
+---
+### Match given firewalld zone definition to interfaces by IPaddress
+# input: zones: zone definitions
+# output: zone_iface: dict of zone and device name
+
+- name: initialize zone interface
+  set_fact:
+    zone_iface: []
+
+- include_tasks: match-if.yml
+  with_items: "{{ ansible_interfaces }}"
+  vars:
+    ifname: "ansible_{{ iface }}"
+    ifd: "{{ hostvars[inventory_hostname][ifname] }}"
+  loop_control:
+    loop_var: iface
