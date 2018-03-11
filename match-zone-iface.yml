@@ -7,8 +7,12 @@
     zones:
       - name: local
         IPv4address: 192.168.0.0/16
+        services:
+          - ssh
       - name: multi
         IPv4address: 169.254.0.0/16
+        services:
+          - ssh
   tasks:
     - include_role:
         name: match-zone-iface
